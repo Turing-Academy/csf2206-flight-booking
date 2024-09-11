@@ -190,8 +190,8 @@
       <input type="text" name="flightNumber" value="${flight.flightNumber || ''}" placeholder="Flight Number" required>
       <input type="text" name="departure" value="${flight.departure || ''}" placeholder="Departure City" required>
       <input type="text" name="arrival" value="${flight.arrival || ''}" placeholder="Arrival City" required>
-      <input type="text" name="history" value="${flight.history || ''}" placeholder="Flight History">
-      <input type="datetime-local" name="departureTime" value="${flight.departureTime || ''}" required>
+      <input type="date" name="history" value="${flight.history || ''}" placeholder="Flight History">
+      <input type="time" name="departureTime" value="${flight.departureTime || ''}" required>
       <input type="number" name="availableTickets" value="${flight.availableTickets || 0}" placeholder="Available Tickets" required>
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">${flight.id ? 'Save Changes' : 'Add Flight'}</button>
       <button type="button" id="cancel" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded">Cancel</button>
