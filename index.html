@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSF Flights</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <header class="px-4 lg:px-6 h-14 flex items-center">
+        <a class="flex items-center justify-center" href="#">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l4 7h-8l4-7z"></path>
+                <path d="M5 17l7 4 7-4-7-4-7 4z"></path>
+            </svg>
+            <span class="sr-only">CSF Flights</span>
+        </a>
+        <nav class="hidden md:flex ml-auto">
+            <ul class="flex space-x-4">
+                <li><a class="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
+                        href="#">Flight Search</a></li>
+                <li><a class="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
+                        href="#">My Bookings</a></li>
+                <li><a class="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
+                        href="#">Administer Flights</a></li>
+            </ul>
+        </nav>
+        <button class="md:hidden ml-auto flex items-center justify-center p-2 border rounded" id="menu-toggle">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <span class="sr-only">Toggle navigation menu</span>
+        </button>
+    </header>
+    <main class="flex-1">
+        <section class="w-full py-6 sm:py-12 md:py-24 lg:py-32 xl:py-48">
+            <div class="container px-4 md:px-6">
+                <div class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="space-y-2">
+                            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">Book Your Next
+                                Adventure</h1>
+                            <p class="max-w-[600px] text-gray-500 md:text-xl">Discover amazing destinations and book
+                                your flights with ease. Your journey begins here.</p>
+                        </div>
+                        <div class="w-full max-w-sm space-y-2">
+                            <form class="flex space-x-2">
+                                <input class="max-w-lg flex-1 p-2 border rounded" placeholder="Search destinations"
+                                    type="text">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center">
+                                    <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M15.5 16.5l-3-3M16 10a6 6 0 10-12 0 6 6 0 0012 0z"></path>
+                                    </svg>
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="bg-white p-4 border rounded shadow">
+                            <div class="font-bold text-lg mb-2">Quick Flight Search</div>
+                            <div class="grid gap-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input class="p-2 border rounded" placeholder="From">
+                                    <input class="p-2 border rounded" placeholder="To">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input class="p-2 border rounded" placeholder="Departure" type="date">
+                                    <input class="p-2 border rounded" placeholder="Return" type="date">
+                                </div>
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded w-full">Search Flights</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+            <div class="container px-4 md:px-6">
+                <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Why Choose Us</h2>
+                <div class="grid gap-6 lg:grid-cols-3 lg:gap-12">
+                    <div class="bg-white p-4 border rounded shadow">
+                        <svg class="h-10 w-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 3l4 4H3v12h18V7h-6l4-4z"></path>
+                        </svg>
+                        <div class="font-bold text-lg">Wide Range of Destinations</div>
+                        <p class="text-gray-500">Explore hundreds of destinations worldwide with our extensive network
+                            of partner airlines.</p>
+                    </div>
+                    <div class="bg-white p-4 border rounded shadow">
+                        <svg class="h-10 w-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 4v16h18V4H3zm14 14H5v-2h12v2zm0-4H5v-2h12v2zm0-4H5V8h12v2z"></path>
+                        </svg>
+                        <div class="font-bold text-lg">Flexible Booking Options</div>
+                        <p class="text-gray-500">Enjoy the freedom to change your travel dates with our flexible booking
+                            policies.</p>
+                    </div>
+                    <div class="bg-white p-4 border rounded shadow">
+                        <svg class="h-10 w-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 12a8 8 0 10-16 0 8 8 0 0016 0zm-9 0a1 1 0 112 0 1 1 0 01-2 0z"></path>
+                        </svg>
+                        <div class="font-bold text-lg">Hassle-free Travel</div>
+                        <p class="text-gray-500">From booking to boarding, we ensure a smooth and stress-free travel
+                            experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-12 md:py-24 lg:py-32">
+            <div class="container px-4 md:px-6">
+                <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Flight Administration</h2>
+                <div id="flight-admin">
+                    <!-- Flight Administration Table will be injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full items-center px-4 md:px-6 border-t">
+        <p class="text-xs text-gray-500">© 2024 CSF Flights. Heçbir haqqınız qorunmur. Bütün haqlaar vəhşicəsinə pozulur.</p>
+        <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+            <a class="text-xs hover:underline" href="#">Terms of Service</a>
+            <a class="text-xs hover:underline" href="#">Privacy</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flightAdmin = document.getElementById('flight-admin');
+            let flights = [];
+
+            function renderFlights() {
+                const tableBody = document.createElement('tbody');
+                flights.forEach(flight => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+        <td>${flight.flightNumber}</td>
+        <td>${flight.departure}</td>
+        <td>${flight.arrival}</td>
+        <td>${flight.departureTime}</td>
+        <td>${flight.availableTickets}</td>
+        <td>
+          <button class="edit-btn" data-id="${flight.id}">Edit</button>
+          <button class="delete-btn" data-id="${flight.id}">Delete</button>
+        </td>
+      `;
+                    tableBody.appendChild(row);
+                });
+
+                flightAdmin.innerHTML = `
+      <div class="mb-4">
+        <button id="add-flight" class="bg-blue-500 text-white px-4 py-2 rounded">Add New Flight</button>
+      </div>
+      <table class="w-full border-collapse border border-gray-200">
+        <thead>
+          <tr>
+            <th>Flight Number</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Departure Time</th>
+            <th>Available Tickets</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        ${tableBody.outerHTML}
+      </table>
+    `;
+
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        const flight = flights.find(f => f.id === id);
+                        showFlightForm(flight);
+                    });
+                });
+
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        handleDeleteFlight(id);
+                    });
+                });
+            }
+
+            function showFlightForm(flight = {}) {
+                const form = document.createElement('form');
+                form.innerHTML = `
+      <h3>${flight.id ? 'Edit Flight' : 'Add New Flight'}</h3>
+      <input type="text" name="flightNumber" value="${flight.flightNumber || ''}" placeholder="Flight Number" required>
+      <input type="text" name="departure" value="${flight.departure || ''}" placeholder="Departure City" required>
+      <input type="text" name="arrival" value="${flight.arrival || ''}" placeholder="Arrival City" required>
+      <input type="text" name="history" value="${flight.history || ''}" placeholder="Flight History">
+      <input type="datetime-local" name="departureTime" value="${flight.departureTime || ''}" required>
+      <input type="number" name="availableTickets" value="${flight.availableTickets || 0}" placeholder="Available Tickets" required>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">${flight.id ? 'Save Changes' : 'Add Flight'}</button>
+      <button type="button" id="cancel" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded">Cancel</button>
+    `;
+
+                const formContainer = document.createElement('div');
+                formContainer.classList.add('form-container');
+                formContainer.appendChild(form);
+                flightAdmin.innerHTML = '';
+                flightAdmin.appendChild(formContainer);
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    const flightData = {
+                        id: flight.id || Date.now().toString(),
+                        flightNumber: formData.get('flightNumber'),
+                        departure: formData.get('departure'),
+                        arrival: formData.get('arrival'),
+                        history: formData.get('history'),
+                        departureTime: formData.get('departureTime'),
+                        availableTickets: parseInt(formData.get('availableTickets'))
+                    };
+
+                    if (flight.id) {
+                        handleEditFlight(flightData);
+                    } else {
+                        handleAddFlight(flightData);
+                    }
+                });
+
+                document.getElementById('cancel').addEventListener('click', () => {
+                    renderFlights();
+                });
+            }
+
+            function handleAddFlight(flight) {
+                flights.push(flight);
+                renderFlights();
+            }
+
+            function handleEditFlight(flight) {
+                flights = flights.map(f => f.id === flight.id ? flight : f);
+                renderFlights();
+            }
+
+            function handleDeleteFlight(id) {
+                flights = flights.filter(f => f.id !== id);
+                renderFlights();
+            }
+
+            // Initial render
+            renderFlights();
+
+            document.getElementById('add-flight').addEventListener('click', () => {
+                showFlightForm();
+            });
+        });
+
+    </script>
+</body>
+
+</html>
