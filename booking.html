@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Bookings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <header class="bg-white dark:bg-gray-800 shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">CSF Bookings</h1>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div>
+
+
+                <div class="mt-4">
+                    <input type="text" id="search-bar" placeholder="Search bookings..."
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+
+                <div class="flex space-x-4">
+                    <button id="my-bookings-tab" class="text-lg font-bold">My Bookings</button>
+                    <button id="book-flight-tab" class="text-lg font-bold">Book a Flight</button>
+                </div>
+
+                <div id="my-bookings" class="grid gap-4 mt-4 md:grid-cols-2 lg:grid-cols-3">
+                    
+            </div>
+
+            <div id="book-flight" class="hidden">
+                <div class="bg-white shadow rounded-lg p-6 mt-6">
+                    <h2 class="text-2xl font-bold">Book a New Flight</h2>
+                    <p class="text-gray-600">Fill in the details to book your next adventure.</p>
+                    <form id="booking-form" class="mt-4 space-y-4">
+                        <div class="space-y-2">
+                            <label for="flightId" class="block text-sm font-medium text-gray-700">Select
+                                Flight</label>
+                            <select id="flightId" name="flightId"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a flight</option>
+                                <option value="1">FL001 - New York to London</option>
+                                <option value="2">FL002 - Paris to Tokyo</option>
+                                <option value="3">FL003 - Sydney to Los Angeles</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="userId" class="block text-sm font-medium text-gray-700">User ID</label>
+                            <input type="text" id="userId" name="userId"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md"
+                                placeholder="Enter your user ID" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="name" name="name"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md"
+                                placeholder="Enter your name" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="seats" class="block text-sm font-medium text-gray-700">Number of
+                                Seats</label>
+                            <input type="number" id="seats" name="seats" min="1"
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-md" value="1" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md">Book
+                            Flight</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <div id="edit-booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-bold mb-4">Edit Booking</h3>
+            <form id="edit-booking-form" class="space-y-4">
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const myBookingsTab = document.getElementById('my-bookings-tab');
+            const bookFlightTab = document.getElementById('book-flight-tab');
+            const myBookingsSection = document.getElementById('my-bookings');
+            const bookFlightSection = document.getElementById('book-flight');
+            const bookingForm = document.getElementById('booking-form');
+            const editBookingModal = document.getElementById('edit-booking-modal');
+            const editBookingForm = document.getElementById('edit-booking-form');
+            const searchBar = document.getElementById('search-bar');
+
+            let bookings = []; // This will store bookings
+            let currentBookingId = null;
+
+            // Switch between tabs
+            myBookingsTab.addEventListener('click', function () {
+                myBookingsSection.classList.remove('hidden');
+                bookFlightSection.classList.add('hidden');
+            });
+
+            bookFlightTab.addEventListener('click', function () {
+                bookFlightSection.classList.remove('hidden');
+                myBookingsSection.classList.add('hidden');
+            });
+
+            // Handle new booking submission
+            bookingForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const flightId = document.getElementById('flightId').value;
+                const userId = document.getElementById('userId').value;
+                const name = document.getElementById('name').value;
+                const seats = document.getElementById('seats').value;
+
+                const booking = {
+                    id: Date.now().toString(),
+                    flightId,
+                    userId,
+                    name,
+                    seats
+                };
+
+                bookings.push(booking);
+                displayBookings();
+                bookingForm.reset();
+            });
+
+            // Display bookings
+            function displayBookings(filter = "") {
+                myBookingsSection.innerHTML = ''; // Clear previous bookings
+
+                const filteredBookings = bookings.filter(booking => {
+                    const flight = availableFlights.find(f => f.id === booking.flightId);
+                    const searchText = `${flight.flightNumber} ${booking.name}`.toLowerCase();
+                    return searchText.includes(filter.toLowerCase());
+                });
+
+                filteredBookings.forEach(booking => {
+                    const flight = availableFlights.find(f => f.id === booking.flightId);
+                    const bookingCard = document.createElement('div');
+                    bookingCard.classList.add('bg-white', 'shadow', 'rounded-lg', 'p-4');
+
+                    bookingCard.innerHTML = `
+                <h3 class="text-xl font-bold">${flight.flightNumber}</h3>
+                <p>${flight.departure} to ${flight.arrival}</p>
+                <p><strong>${booking.seats}</strong> seat(s) booked by ${booking.name}</p>
+                <button class="edit-button bg-yellow-500 text-white px-4 py-2 rounded-md mt-2" data-id="${booking.id}">Edit</button>
+                <button class="delete-button bg-red-500 text-white px-4 py-2 rounded-md mt-2 ml-2" data-id="${booking.id}">Cancel</button>
+            `;
+
+                    myBookingsSection.appendChild(bookingCard);
+                });
+
+                // Attach event listeners to edit and delete buttons
+                document.querySelectorAll('.edit-button').forEach(button => {
+                    button.addEventListener('click', handleEditBooking);
+                });
+
+                document.querySelectorAll('.delete-button').forEach(button => {
+                    button.addEventListener('click', handleDeleteBooking);
+                });
+            }
+
+            // Handle Edit Booking
+            function handleEditBooking(event) {
+                const bookingId = event.target.getAttribute('data-id');
+                const booking = bookings.find(b => b.id === bookingId);
+                currentBookingId = bookingId;
+
+                // Fill the edit form with booking data
+                editBookingForm.innerHTML = `
+            <div class="space-y-2">
+                <label for="editFlightId" class="block text-sm font-medium text-gray-700">Select Flight</label>
+                <select id="editFlightId" class="block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    ${availableFlights.map(flight => `
+                        <option value="${flight.id}" ${flight.id === booking.flightId ? 'selected' : ''}>
+                            ${flight.flightNumber} - ${flight.departure} to ${flight.arrival}
+                        </option>`).join('')}
+                </select>
+            </div>
+            <div class="space-y-2">
+                <label for="editUserId" class="block text-sm font-medium text-gray-700">User ID</label>
+                <input type="text" id="editUserId" class="block w-full px-3 py-2 border border-gray-300 rounded-md" value="${booking.userId}" required>
+            </div>
+            <div class="space-y-2">
+                <label for="editName" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="editName" class="block w-full px-3 py-2 border border-gray-300 rounded-md" value="${booking.name}" required>
+            </div>
+            <div class="space-y-2">
+                <label for="editSeats" class="block text-sm font-medium text-gray-700">Number of Seats</label>
+                <input type="number" id="editSeats" min="1" class="block w-full px-3 py-2 border border-gray-300 rounded-md" value="${booking.seats}" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md">Update Booking</button>
+        `;
+
+                editBookingModal.classList.remove('hidden');
+
+                editBookingForm.onsubmit = function (e) {
+                    e.preventDefault();
+                    const updatedBooking = {
+                        id: currentBookingId,
+                        flightId: document.getElementById('editFlightId').value,
+                        userId: document.getElementById('editUserId').value,
+                        name: document.getElementById('editName').value,
+                        seats: document.getElementById('editSeats').value
+                    };
+
+                    bookings = bookings.map(b => (b.id === currentBookingId ? updatedBooking : b));
+                    displayBookings();
+                    editBookingModal.classList.add('hidden');
+                };
+            }
+
+            // Handle Delete Booking
+            function handleDeleteBooking(event) {
+                const bookingId = event.target.getAttribute('data-id');
+                bookings = bookings.filter(b => b.id !== bookingId);
+                displayBookings(); // Refresh bookings
+            }
+
+            // Filter bookings based on search input
+            searchBar.addEventListener('input', function (event) {
+                const filter = event.target.value;
+                displayBookings(filter); // Call display function with filter value
+            });
+
+            // Mock flight data
+            const availableFlights = [
+                { id: '1', flightNumber: 'FL001', departure: 'New York', arrival: 'London' },
+                { id: '2', flightNumber: 'FL002', departure: 'Paris', arrival: 'Tokyo' },
+                { id: '3', flightNumber: 'FL003', departure: 'Sydney', arrival: 'Los Angeles' },
+            ];
+
+            displayBookings(); // Initial display
+        });
+
+
+    </script>
+</body>
+
+</html>
